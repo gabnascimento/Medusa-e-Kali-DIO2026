@@ -3,7 +3,7 @@ Este projeto foi desenvolvido como parte do desafio prático do curso, com o obj
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * Ambiente Utilizado:
 Kali Linux (máquina atacante)
-Metasploitable 2 (máquina vulnerável)
+Metasploitable 2 (máquina vulnerável) - https://sourceforge.net/projects/metasploitable/files/Metasploitable2/
 Oracle VM VirtualBox
 Medusa
 ## 📎 Evidências do Laboratório
