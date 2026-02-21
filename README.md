@@ -2,11 +2,13 @@
 Este projeto foi desenvolvido como parte do desafio prático do curso, com o objetivo de:  Implementar ataques de força bruta em ambiente controlado  Compreender como ferramentas automatizam tentativas de autenticação  Documentar todo o processo técnico  Identificar vulnerabilidades e propor mitigação  Ambiente isolado, sem interações reais.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * Ambiente Utilizado:
-Kali Linux (máquina atacante)
+Kali Linux (máquina atacante) - https://www.kali.org/
+
 Metasploitable 2 (máquina vulnerável) - https://sourceforge.net/projects/metasploitable/files/Metasploitable2/
-Oracle VM VirtualBox
-Medusa
-## 📎 Evidências do Laboratório
+
+Oracle VM VirtualBox - https://www.virtualbox.org/
+
+Medusa -Acessível no terminal do Kali Linux
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 🌐 2️⃣ Configuração de Rede
@@ -52,7 +54,7 @@ Wordlists são combinações prováveis de usuários e senhas. Em ambientes reai
 
 Comando utilizado (conforme evidência da imagem):
 
-medusa -h 192.168.56.102 -U users.txt -P pass.txt -M ftp -t 6
+medusa -h 000.000.00.102 -U users.txt -P pass.txt -M ftp -t 6
 Explicação dos parâmetros:
 
 -h → host alvo
@@ -71,7 +73,7 @@ Durante a execução, foi possível observar o Medusa testando cada combinação
 
 Na saída do terminal foi identificado:
 
-ACCOUNT FOUND: [ftp] Host: 192.168.56.102 User: msfadmin Password: msfadmin
+ACCOUNT FOUND: [ftp] Host: (numero de ip da máquina) User: msfadmin Password: msfadmin
 
 Isso demonstrou que:
 
@@ -81,65 +83,28 @@ A senha é fraca
 
 O serviço permite múltiplas tentativas sem bloqueio
 
-✅ 6️⃣ Validação Manual do Acesso
+-> Validação Manual do Acesso
 
 Após identificar a credencial:
 
-ftp 192.168.56.102
+ftp 1xx.x6x.xx.101
 
-Resultado observado (conforme imagem):
-
-230 Login successful.
-
+Resultado observado foi o de login com sucesso.
 Isso confirmou que a credencial descoberta realmente concede acesso ao sistema.
 
-Aprendizado:
-Ferramentas automatizadas devem sempre ter a validação manual para confirmar resultado.
+Aprendizado:Ferramentas automatizadas devem sempre ter a validação manual para confirmar resultado, além de que conteúdos são vazados diariamente, dentre eles senhas e usuaŕios que podem ser testados em vários ambientes e um deles pode ter o login edetuado com sucesso.
 
-🌐 7️⃣ Ataques em Formulários Web (DVWA)
+->  Ataques em Formulários Web (DVWA)
 
 A aplicação web vulnerável estava acessível via:
 
-http://192.168.56.102/dvwa
+http://xxx.1xx.xx.101/dvwa
+(Visando seguir as boas práticas não colocarei o número de IP da minha máquina mesmo que seja um laboratório.)
 
-Utilizando a aba Network (F12) do navegador, observei:
-
-Método POST
-
-Parâmetros enviados:
-
-username
-
-password
-
-Login
-
-Na área de Request, foi possível visualizar exatamente o que o servidor recebe.
-
-Aprendizado importante:
 Ferramentas como Medusa ou outras automatizam o envio dessas requisições, utilizando como critério de sucesso/erro a resposta retornada pelo servidor.
 
-Se o sistema não implementa:
+Se o sistema não implementa Rate limiting,CAPTCHA,Bloqueio de conta ele se torna vulnerável à automação.
 
-Rate limiting
-
-CAPTCHA
-
-Bloqueio de conta
-
-Ele se torna vulnerável à automação.
-
-🗂️ 8️⃣ Enumeração SMB e Password Spraying
-
-Enumeração inicial:
-
-enum4linux 192.168.56.102
-
-Posteriormente, foi realizado teste com uma única senha para múltiplos usuários:
-
-medusa -h 192.168.56.102 -U users.txt -p msfadmin -M smbnt
-
-Esse método reduz chance de bloqueio e simula cenário corporativo mal configurado.
 ---------------------------------------------------------------------------------------------------
 * Principais Aprendizados
 
@@ -154,49 +119,17 @@ Serviços sem limitação de tentativas são facilmente exploráveis.
 A análise de requisições HTTP ajuda a entender como a automação funciona.
 
 Validação manual é essencial após uso de ferramenta.
+Sistemas legados precisam ser revistos e atualizados para que não sejam submetidos a explorações.
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-🛡️ 🔐 Recomendações de Mitigação
-FTP
-
-Implementar política de senhas fortes
-
-Configurar bloqueio após múltiplas tentativas
-
-Utilizar SFTP
-
-Monitoramento de logs
-
-Web
-
-Rate limiting
-
-CAPTCHA
-
-Bloqueio de conta
-
-Hash seguro (bcrypt/argon2)
-
-SMB
-
-Política de lockout
-
-Desativar SMBv1
-
-Monitoramento de eventos de autenticação
+🔐 Dito isso, acredito que como recomendações de mitigação contra o FTP são: Implementar política de senhas fortes,Configurar bloqueio após múltiplas tentativas,Utilizar SFTP,Monitoramento de logs Web
+,Rate limiting,CAPTCHA,Bloqueio de conta.
 -----------------------------------------------------------------------------------------------
-🎯 Conclusão
 
-Este laboratório me permitiu compreender de forma prática:
+Conclusão
 
-Como ataques de força bruta funcionam
-
-Como ferramentas automatizam tentativas
-
-Como validar resultados
-
-A importância de controles de autenticação
-
+Este laboratório me permitiu compreender de forma prática:Como ataques de força bruta funcionam,a utilização e como rodam as ferramentas que automatizam tentativas de login, não obstabte, aprendi a como validar resultados e a importância de controles de autenticação.
 Foi desafiador inicialmente configurar a comunicação entre as VMs, mas após ajustes na rede Host-Only, consegui estruturar todo o ambiente e executar os testes com sucesso.
+Penso em outros diversos cenários que podem ser aplicados, mas acima de tudo, o curso fez com que aprendamos a nos defender e a defenser a instituição em que atuaremos.
 
 
 
